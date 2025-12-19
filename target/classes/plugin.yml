@@ -1,0 +1,9 @@
+name: flynoclip
+version: '1.0-SNAPSHOT'
+main: me.carlos.flynoclip.Flynoclip
+api-version: '1.21'
+authors: [carlos]
+description: primeira tentativa de plugin. -> fly e noclip
+commands:
+  jogar:
+    description: joga.

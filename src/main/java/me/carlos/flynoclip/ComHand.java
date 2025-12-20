@@ -9,15 +9,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.event.HandlerList;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.Vector;
+import java.util.*;
 
 public class ComHand implements CommandExecutor {
 
@@ -100,6 +99,40 @@ public class ComHand implements CommandExecutor {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cnoclip off"));
                 return true;
             }
+        }
+
+        if (cmd.getName().equals("inventory")){
+            Player player = (Player)sender;
+
+            if (!player.isOp()) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cVOCE NAO PODE!"));
+                return true;
+            }
+            if (args.length == 0){
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cvamos usar direito ne tambem..."));
+                return true;
+            }
+            Player analisando = plugin.getServer().getPlayer(args[0]);
+            if (analisando == null){
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cpequeno coagulo nao exziste,.."));
+                return true;
+            }
+
+            Inventory inv = Bukkit.createInventory(null, 45, "Inventario de " + args[0]);
+
+            for (int i = 0; i < 36; i++){
+                if (analisando.getInventory().getItem(i) != null) {
+                    inv.setItem(i+9, analisando.getInventory().getItem(i));
+                }
+            }
+            inv.setItem(0, analisando.getInventory().getHelmet());
+            inv.setItem(1, analisando.getInventory().getChestplate());
+            inv.setItem(2, analisando.getInventory().getLeggings());
+            inv.setItem(3, analisando.getInventory().getBoots());
+            inv.setItem(4, analisando.getInventory().getItemInOffHand());
+
+            player.openInventory(inv);
+            return true;
         }
 
         return false;

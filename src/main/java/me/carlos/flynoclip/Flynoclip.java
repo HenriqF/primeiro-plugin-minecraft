@@ -9,6 +9,7 @@ public final class Flynoclip extends JavaPlugin {
         getCommand("jogar").setExecutor(new ComHand(this));
         getCommand("fly").setExecutor(new ComHand(this));
         getCommand("noclip").setExecutor(new ComHand(this));
+        getCommand("inventory").setExecutor(new ComHand(this));
     }
 
 }

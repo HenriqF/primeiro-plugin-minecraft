@@ -7,3 +7,7 @@ description: primeira tentativa de plugin. -> fly e noclip
 commands:
   jogar:
     description: joga.
+  fly:
+    description: toggle fly.
+  noclip:
+    description: toggle noclip.

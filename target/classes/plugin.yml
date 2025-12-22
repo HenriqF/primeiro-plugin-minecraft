@@ -13,3 +13,5 @@ commands:
     description: toggle noclip.
   inventory:
     description: ver o inventario de pequeno coagulo.
+  god:
+    description: god tier.

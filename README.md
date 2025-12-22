@@ -1,1 +1,3 @@
-nem eu sei tambem é quase 4 da manha ja 
+versao [paper](https://papermc.io/downloads/paper) 1.21.10
+
+plugin: flynoclip.jar

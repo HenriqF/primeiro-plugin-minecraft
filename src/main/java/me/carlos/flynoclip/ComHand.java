@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.World;
 import org.bukkit.util.RayTraceResult;
 
+
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,9 +24,13 @@ import java.util.*;
 
 public class ComHand implements CommandExecutor {
 
+    private final Vanish vanish;
     private final JavaPlugin plugin;
     public ComHand(JavaPlugin plugin) {
         this.plugin = plugin;
+        this.vanish = new Vanish(plugin);
+
+        plugin.getServer().getPluginManager().registerEvents(vanish, plugin);
     }
 
     private final Map<String, String> gabarito = new HashMap<>(Map.of(
@@ -35,7 +40,7 @@ public class ComHand implements CommandExecutor {
     ));
     private final Map<UUID, Boolean> noclip = new HashMap<>();
     private final Map<UUID, NoClip> nctasks = new HashMap<>();
-    private final Map<UUID, BukkitTask> gods = new HashMap<>();
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -139,38 +144,18 @@ public class ComHand implements CommandExecutor {
             return true;
         }
 
-        if (cmd.getName().equals("god")){
+        if (cmd.getName().equals("v")){
             Player player = (Player)sender;
-
             if (!player.isOp()) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cVOCE NAO PODE!"));
                 return true;
             }
-            if (gods.containsKey(player.getUniqueId())){
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cVOCE NAO MAIS É UMA DEIDADE"));
-                gods.get(player.getUniqueId()).cancel();
-
-                gods.remove(player.getUniqueId());
+            Boolean result = vanish.vanish(player);
+            if (result){
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&2Sumiu"));
                 return true;
             }
-
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&2VOCE E GOD"));
-
-            BukkitTask newgod = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    RayTraceResult r = player.rayTraceEntities(100);
-
-                    if (r != null && r.getHitEntity() != null) {
-                        Entity entity = r.getHitEntity();
-                        World world = entity.getWorld();
-                        world.createExplosion(entity.getLocation(), 20);
-
-                    }
-                }
-            }.runTaskTimer(plugin, 0L, 1L);
-            gods.put(player.getUniqueId(), newgod);
-
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&2Volte"));
             return true;
         }
 

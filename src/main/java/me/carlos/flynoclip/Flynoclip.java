@@ -6,11 +6,17 @@ public final class Flynoclip extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("çGDFSAKNFLKASDFNASDLKF");
-        getCommand("jogar").setExecutor(new ComHand(this));
-        getCommand("fly").setExecutor(new ComHand(this));
-        getCommand("noclip").setExecutor(new ComHand(this));
-        getCommand("inventory").setExecutor(new ComHand(this));
-        getCommand("god").setExecutor(new ComHand(this));
+
+        ComHand handler = new ComHand(this);
+        getCommand("jogar").setExecutor(handler);
+        getCommand("fly").setExecutor(handler);
+        getCommand("noclip").setExecutor(handler);
+        getCommand("inventory").setExecutor(handler);
+        getCommand("v").setExecutor(handler);
+
+
+        getServer().getPluginManager().registerEvents(new Chat(), this);
+
     }
 
 }
